@@ -1,0 +1,141 @@
+name: Bug report
+description: Something behaves differently than documented
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing, **restart `dsh web`** after installing or updating. A plugin
+        installed after startup has no `/plugins/<name>/client.js` route at all (404),
+        and a browser refresh cannot change that — many "not working" reports are this.
+
+        Self-check:
+        ```powershell
+        Invoke-WebRequest http://127.0.0.1:3080/plugins/dsh-custom-style/client.js -UseBasicParsing | Select-Object StatusCode
+        ```
+
+  - type: textarea
+    id: happened
+    attributes:
+      label: What happened
+      description: The actual behaviour, including any error message verbatim.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: The documented behaviour. If the README states it, quote the line.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Settings → Custom Style
+        2. Switch to the Element picker tab
+        3. …
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area is broken
+      description: Pointing at a subsystem makes the report actionable.
+      options:
+        - Global CSS tab (typing / undo / balance warning / token insert)
+        - Element picker (start / hover / select / modal hides and returns)
+        - Tokens tab (search / light+dark values / reset)
+        - Density tab (sliders)
+        - Presets tab (apply / export / import / clear)
+        - Persistence (reload / restart / switching light↔dark)
+        - Install or loading (plugin missing, console errors on boot)
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: dsh-version
+    attributes:
+      label: DSH version
+      description: Output of `dsh --version`, or the version shown in the GUI.
+      placeholder: 0.1.5-rc.2
+    validations:
+      required: true
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: dsh-custom-style version
+      description: From the plugin's package.json, or the release tag you installed.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: Chrome 133 / Edge 133 / Firefox 135
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installed-via
+    attributes:
+      label: Installed via
+      options:
+        - dsh plugin add github:…
+        - dsh plugin add . (local clone)
+        - pnpm link:
+        - Manual copy into node_modules
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-plugins
+    attributes:
+      label: Other plugins in the profile
+      description: >
+        The entries in `$DSH_HOME/profiles/web/package.json` → `dsh.profile.bundles`.
+        Theming and layout plugins are the most likely to interact with this one, so
+        please name them and their versions.
+      placeholder: |
+        dsh-dream-skin@9.16.0
+        dsh-better-sidebar@0.19.1
+    validations:
+      required: false
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Browser console output
+      description: Paste anything from the browser devtools console.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: state
+    attributes:
+      label: Relevant part of $DSH_HOME/custom-style.json (optional)
+      description: Redact anything personal — this file holds your CSS and token overrides.
+      render: json
+    validations:
+      required: false

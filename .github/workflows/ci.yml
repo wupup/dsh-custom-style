@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A newer push to the same ref cancels an in-flight run.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # The plugin ships a committed bundle and has zero dependencies, so the
+        # only thing CI proves is that the bundle loads, the suite passes, and
+        # the generated artifacts are in sync with the sources. Both platforms
+        # are covered because the persistence layer has Windows-specific paths
+        # (atomic rename fallback) and the test runner has to work without
+        # spawning children on either.
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # No install step: the project has no dependencies at all.
+
+      - name: Artifact checks (bundle in sync with src/, parses, host half loads)
+        run: node tools/check.mjs
+
+      - name: Run the behavior suite
+        run: npm test

@@ -1,0 +1,16 @@
+# Normalize line endings so the repository stays consistent across platforms.
+# Git stores LF in the object database; Windows checkouts get CRLF.
+* text=auto eol=lf
+
+# Generated bundle: mark it as generated in GitHub's diff UI and language stats.
+lib/client.js linguist-generated=true
+lib/tokens.json linguist-generated=true
+
+# Binary-ish assets are never text-normalized.
+*.png binary
+*.jpg binary
+*.webp binary
+
+# Keep the default Windows/DOS script handling explicit.
+*.cmd text eol=crlf
+*.ps1 text eol=crlf

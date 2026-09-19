@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or idea
+    url: https://github.com/wupup/dsh-custom-style/discussions
+    about: Ask how something works, or discuss a direction, without filing a bug.
+  - name: Show your setup
+    url: https://github.com/wupup/dsh-custom-style/discussions/categories/show-and-tell
+    about: Share a preset pack or a screenshot of your customized DSH.
+  - name: DSH itself
+    url: https://github.com/deepseek-ai/deepseek-harness
+    about: Problems with DSH itself (not this plugin) belong upstream.

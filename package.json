@@ -1,0 +1,70 @@
+{
+  "name": "dsh-custom-style",
+  "version": "0.1.0",
+  "description": "DSH Web 界面样式自定义插件：全局自定义 CSS 编辑器、可视化点选元素编辑、--dsw-* 主题变量面板、界面密度微调、预设样式包与导入导出。Customize the DSH web GUI: a live CSS editor, visual element picker, design-token panel, density controls, and shareable preset packs.",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wupup/dsh-custom-style.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wupup/dsh-custom-style/issues"
+  },
+  "homepage": "https://github.com/wupup/dsh-custom-style#readme",
+  "scripts": {
+    "build": "node tools/extract-tokens.mjs && node tools/build-client.mjs",
+    "tokens": "node tools/extract-tokens.mjs",
+    "client": "node tools/build-client.mjs",
+    "check": "node tools/check.mjs",
+    "test": "node test/run.mjs"
+  },
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "custom-css",
+    "theme",
+    "style",
+    "web-ui",
+    "自定义样式",
+    "美化"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-settings-general"
+      ],
+      "platform": "web",
+      "immediately": false
+    }
+  }
+}
