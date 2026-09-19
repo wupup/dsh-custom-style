@@ -38,6 +38,15 @@ async function check(name, run) {
 	}
 }
 
+/**
+ * Collapse CRLF to LF so comparisons ignore the checkout's line-ending style.
+ * @param text - file content read from disk.
+ * @returns the same content with a single `\n` line terminator everywhere.
+ */
+function normalizeEol(text) {
+	return text.replace(/\r\n/g, "\n");
+}
+
 process.stdout.write("artifact checks\n");
 
 // The bundle is regenerated and compared FIRST, so a stale artifact is reported
@@ -51,7 +60,11 @@ await check("the committed bundle matches src/", async () => {
 	const before = readFileSync(bundlePath, "utf8");
 	await import("./build-client.mjs");
 	const after = readFileSync(bundlePath, "utf8");
-	if (before !== after) {
+	// Compare with line endings normalized. `.gitattributes` declares this repo
+	// LF-in-the-object-database, so a Windows checkout materializes CRLF while the
+	// builder always emits LF — a byte comparison would report a false "stale" on
+	// every Windows machine. Content differences are what matter here.
+	if (normalizeEol(before) !== normalizeEol(after)) {
 		// The freshly built (correct) file is left in place so the fix is obvious.
 		throw new Error("STALE — run `npm run client` and commit lib/client.js");
 	}
