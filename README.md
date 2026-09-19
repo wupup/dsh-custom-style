@@ -168,9 +168,9 @@ npm test
 
 - **[dsh-dream-skin](https://github.com/RevolutionLA/dsh-dream-skin)**（MIT）——一个已经成熟的手写 bundle 插件。本项目的浏览器半采用与它相同的形态（plain-CJS 工厂 + 种子探测降级 + `data-plugin` 标记的样式标签）。该形态最初由它实践并记录，是本项目能快速做对的原因。
 - **[dsh-better-sidebar](https://github.com/liustack/dsh-better-sidebar)**——宿主半的 `/sidebar` 路由展示了信任围栏的写法；`lib/index.js` 的围栏与「比对 hostname 而非 host」这一决定沿用了它的做法。
-- **DSH 官方客户端包**（`@deepseek-ai/dsh-client-ui-*`，MIT）——`docs/api-notes.md` 对 slot / store / locale / 主题令牌契约的梳理，来自阅读这些包的代码与文档。
+- **DSH 官方客户端包**（`@deepseek-ai/dsh-client-ui-*`，MIT）——`api-notes.md` 对 slot / store / locale / 主题令牌契约的梳理，来自阅读这些包的代码与文档。
 
-`docs/api-notes.md` 记录了 DSH 客户端插件机制的逐条契约，每条都标注了来源文件与行号。它不包含任何第三方源代码，可以自由复用。
+`api-notes.md` 记录了 DSH 客户端插件机制的逐条契约，每条都标注了来源文件与行号。它不包含任何第三方源代码，可以自由复用。
 
 ### 许可
 
